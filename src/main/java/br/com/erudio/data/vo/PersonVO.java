@@ -77,4 +77,8 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
     public int hashCode() {
         return Objects.hash(super.hashCode(), key, firstName, lastName, address, gender);
     }
+
+    public Long getId() {
+        return key;
+    }
 }
