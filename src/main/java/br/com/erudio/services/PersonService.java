@@ -3,6 +3,7 @@ package br.com.erudio.services;
 import br.com.erudio.controllers.PersonController;
 import br.com.erudio.data.vo.PersonVO;
 import br.com.erudio.data.voV2.PersonVOV2;
+import br.com.erudio.exceptions.RequiredObjectIsNullException;
 import br.com.erudio.exceptions.ResourcesNotFoundException;
 import br.com.erudio.mapper.DozerMapper;
 import br.com.erudio.mapper.custom.PersonMapper;
@@ -52,6 +53,7 @@ public class PersonService {
     }
 
     public PersonVO create(PersonVO person) throws Exception {
+        if (person == null) throw new RequiredObjectIsNullException();
         logger.info("Creating a new person!");
         var entity = DozerMapper.parseObject(person, Person.class);
         var vo = DozerMapper.parseObject(repository.save(entity), PersonVO.class) ;
@@ -67,6 +69,7 @@ public class PersonService {
     }
 
     public PersonVO update(PersonVO person) throws Exception {
+        if (person == null) throw new RequiredObjectIsNullException();
         logger.info("Updating one person!");
         Person entity = repository.findById(person.getKey())
                 .orElseThrow(() -> new ResourcesNotFoundException("No records found for this ID!"));
